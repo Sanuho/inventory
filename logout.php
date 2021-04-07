@@ -3,6 +3,6 @@
 
 session_destroy();
 
-header("location: login-register.php");
+header("location: login.php");
 
 ?>
