@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="select2.min.css" />
+<!-- <link rel="stylesheet" href="select2.min.css" /> -->
 <?php include "config/koneksi.php";
 // $wh = @$_SESSION['wh'];
 if (isset($_GET['id'])) {
@@ -25,7 +25,7 @@ if (isset($_GET['id'])) {
                             <div class="modal-body">
                                 <tr>
                                     <td>Item</td>
-                                    <input type="text" name="id" class="form-control" value="<?php echo $idH; ?>">
+                                    <input type="hidden" name="id" class="form-control" value="<?php echo $idH; ?>">
                                     <input type="hidden" name="reqd" class="form-control" value="<?php echo $hasilkode; ?>">
                                     <td>
                                         <div class="form-example-int form-horizental mg-t-15">
@@ -71,7 +71,7 @@ if (isset($_GET['id'])) {
                                     <td>Remark</td>
                                     <td>
                                         <div class="bootstrap-select fm-cmp-mg">
-                                            <select class="selectpicker" name="cate" data-live-search="true">
+                                            <select class="selectpicker" name="cate" data-live-search="true" required>
                                                 <option value=""></option>
                                                 <?php
                                                 $sql = mysqli_query($koneksi, "SELECT * FROM karyawan");
@@ -104,6 +104,15 @@ if (isset($_GET['id'])) {
                 <div class="form-element-list">
 
                     <div class="row">
+                        <div class="alert alert-success alert-dismissible" role="alert" style="display: none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button>
+                            <p id="msg-success">Success</p>
+                        </div>
+                        <div class="alert alert-danger alert-dismissible alert-mg-b-0" role="alert" style="display: none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button>
+                            <p id="msg-error">Error</p>
+                        </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="form-example-wrap mg-t-30">
                                 <div class="cmp-tb-hd cmp-int-hd">
@@ -220,6 +229,25 @@ if (isset($_GET['id'])) {
             });
         }
 
+        function alertMsg(type, text) {
+            // alert(type);
+            if (type == "success") {
+                // document.getElementsByClassName('alert-success').style.display = "";
+                // $('.alert-success').show();​​​​​​
+                document.getElementById('msg-success').innerHTML = text;
+                $(".alert-success").fadeTo(10000, 500).slideUp(500, function() {
+                    $(".alert-success").slideUp(500);
+                });
+            } else if (type == "error") {
+                // document.getElementsByClassName('alert-danger').style.display = "";
+                // $('.alert-danger').show();
+                document.getElementById('msg-error').innerHTML = text;
+                $(".alert-danger").fadeTo(10000, 500).slideUp(500, function() {
+                    $(".alert-danger").slideUp(500);
+                });
+            }
+        }
+
         $('#submit').click(function() {
             var answer = confirm('Are you sure you want to save?');
             if (answer === false) {
@@ -230,27 +258,39 @@ if (isset($_GET['id'])) {
                     method: "POST",
                     data: $('#add').serialize(),
                     success: function(data) {
-                        alert(data);
+                        if (data=="Data Inserted") {
+                            alertMsg("success",data);
+                        }else{
+                            alertMsg("error",data);
+                        }
+                        
                         $('#add')[0].reset();
                         fetch();
+                    },
+                    error:function(){
+                        alertMsg("error","Error add item");
                     }
                 });
             }
         });
 
-        function ConfirmDelete(id) {
+        function ConfirmDelete(id,req) {
             var x = confirm("Are you sure you want to delete?");
             if (x){
                 $.ajax({
                     url   : "models/hapus_req_d.php?id="+id,
                     method: "POST",
                     data  : {
-                        id : id
+                        id : id,
                     },
                     success: function(data) {
-                        alertMsg("success","Success add Item");
+                        alertMsg("success","Success delete item");
                         fetch();
+                    },
+                    error:function(){
+                        alertMsg("error","Error delete item");
                     }
+                    
                 });
             }else{
                 return false;

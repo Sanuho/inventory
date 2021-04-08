@@ -21,7 +21,7 @@ while($data=mysqli_fetch_array($sql)){
     <td>'.$data["qty"].'</td>
     <td>'.$data["nama_karyawan"].'</td>
     
-    <td><a href="#" onclick="ConfirmDelete('.$data['id_sub'].','.$data['req_h'].')">
+    <td><a href="#" onclick="ConfirmDelete('.$data['id_sub'].')">
     <button href data-toggle="tooltip" data-placement="left" title="Delete Data" class="btn btn-danger danger-icon-notika btn-reco-mg btn-button-mg"><i class="notika-icon notika-close"></i></button></a>
     </td>
    </tr>';}

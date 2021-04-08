@@ -1,48 +1,35 @@
 <?php
 include "../config/koneksi.php";
-if(isset($_GET['id'])){
-$id=$_GET['id'];
-$query=mysqli_query($koneksi,"UPDATE request_h set flag=1 where req_h='$id'");
-//$insert=mysqli_query($koneksi,"INSERT INTO ");
-if ($query) {
+if (isset($_GET['id'])) {
+  $id = $_GET['id'];
+  $query = mysqli_query($koneksi, "UPDATE request_h set flag=1 where req_h='$id'");
+  //$insert=mysqli_query($koneksi,"INSERT INTO ");
+  if ($query) {
 
-  echo "<script type=\"text/javascript\">
-              alert(\"Data Approved!!\");
-              window.location = \"../index.php?page=request\"
-              </script>";
-}	else{
-  echo "<script type=\"text/javascript\">
-              alert(\"Failed!!\");
-              window.location = \"../index.php?page=request\"
-              </script>";
-}
+    echo "<script type=\"text/javascript\">
+                alert(\"Data Approved!!\");
+                window.location = \"../index.php?page=request\"
+                </script>";
+  } else {
+    echo "<script type=\"text/javascript\">
+                alert(\"Failed!!\");
+                window.location = \"../index.php?page=request\"
+                </script>";
+  }
+} elseif (isset($_GET['kode'])) {
+  $kode = $_GET['kode'];
 
+  $query = mysqli_query($koneksi, "UPDATE request_h set flag=0 where req_h='$kode'");
+  if ($query) {
 
-}elseif (isset($_GET['kode'])) {
-$kode=$_GET['kode'];
-
-$query=mysqli_query($koneksi,"UPDATE request_h set flag=0 where req_h='$kode'");
-if ($query) {
-
-  echo "<script type=\"text/javascript\">
+    echo "<script type=\"text/javascript\">
               alert(\"Unapproved Complete!!\");
               window.location = \"../index.php?page=request\"
               </script>";
-
-}	else{
-  echo "<script type=\"text/javascript\">
+  } else {
+    echo "<script type=\"text/javascript\">
               alert(\"Failed!!\");
               window.location = \"../index.php?page=request\"
               </script>";
+  }
 }
-
-
-
-
-}
-
-
-
-
-
-?>

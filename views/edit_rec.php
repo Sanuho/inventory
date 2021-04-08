@@ -24,7 +24,7 @@ if (isset($_GET['id'])) {
                         <table class="table table-responsive">
                             <div class="modal-body">
                                 <tr>
-                                    <input type="text" name="id" class="form-control" value="<?php echo $idH; ?>">
+                                    <input type="hidden" name="id" class="form-control" value="<?php echo $idH; ?>">
                                     <input type="hidden" name="reqd" class="form-control" value="<?php echo $hasilkode; ?>">
                                     <td>Item</td>
                                     <td>
@@ -242,9 +242,12 @@ if (isset($_GET['id'])) {
                     data: $('#add').serialize(),
                     success: function(data) {
                         // alert(data);
-                        alertMsg("success","Success add Item");
+                        alertMsg("success","Success add item");
                         $('#add')[0].reset();
                         fetch();
+                    },
+                    error:function(){
+                        alertMsg("error","Error add item");
                     }
                 });
             }
@@ -261,9 +264,13 @@ if (isset($_GET['id'])) {
                         req: req
                     },
                     success: function(data) {
-                        alertMsg("success","Success add Item");
+                        alertMsg("success","Success delete item");
                         fetch();
+                    },
+                    error:function(){
+                        alertMsg("error","Error delete item");
                     }
+                    
                 });
             }else{
                 return false;
