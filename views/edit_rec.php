@@ -41,7 +41,7 @@ if (isset($_GET['id'])) {
                                                                     ?>
                                                                         <optgroup label='<?php echo $isigrup['name']; ?>'>
                                                                             <?php
-                                                                            $sqlc = mysqli_query($koneksi, "SELECT * from item where id='" . $isigrup['id'] . "' ");
+                                                                            $sqlc = mysqli_query($koneksi, "SELECT * from item where id='" . $isigrup['id'] . "' and stat=1");
                                                                             while ($isicombo = mysqli_fetch_array($sqlc)) {
                                                                             ?>
                                                                                 <option value="<?php echo $isicombo['item_cd']; ?>"><?php echo $isicombo['item_nm']; ?></option>
@@ -168,7 +168,7 @@ if (isset($_GET['id'])) {
                                 <tfoot>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalthree"><i class="fa fa-plus-square"></i> Add</button>
-                                        <button type="button" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                                        <!-- <button type="button" class="btn btn-success"><i class="fa fa-save"></i> Save</button> -->
                                     </td>
                                     <td></td>
                                 </tfoot>

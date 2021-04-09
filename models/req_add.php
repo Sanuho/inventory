@@ -1,9 +1,10 @@
 <?php
 include "../config/koneksi.php";
 
-$id_h       = $_POST['id'];
+$id_h        = $_POST['id'];
 $qty         = $_POST['qty'];
-$rmrk        = $_POST['cate'];
+$request     = $_POST['cate'];
+$remark      = $_POST['remark'];
 $itm         = $_POST['category'];
 $reqd        = $_POST['reqd'];
 $number      = ($_POST["reqd"]);
@@ -22,8 +23,8 @@ if ($qty > 0) {
       
     }
 
-    $sql = mysqli_query($koneksi, "INSERT INTO request_d (id_h,itm_cd,qty,req_h,remark) values('$id_h','$itm','$qty','$reqd','$rmrk')");
-
+    $sql = mysqli_query($koneksi, "INSERT INTO request_d (id_h,itm_cd,qty,req_h,requester,remark) values('$id_h','$itm','$qty','$reqd','$request',$remark)");
+    $id_sub=mysqli_insert_id($koneksi);
     $bulan1 = date('m');
     $tahun1 = date('y');
     $tglkode1 = $tahun1 . $bulan1;
@@ -51,7 +52,7 @@ if ($qty > 0) {
     $waktu = gmdate("H:i:s", time() + 60 * 60 * 7);
     $tanggal = date('Y-m-d');
     $plus = $curStock - $qty;
-    $grgi = mysqli_query($koneksi, "INSERT INTO grgi_history values('$hasilkode1','$itm','$plus','$tanggal','$waktu',0,'$qty','$reqd','$id_h')");
+    $grgi = mysqli_query($koneksi, "INSERT INTO grgi_history values('$hasilkode1','$itm','$plus','$tanggal','$waktu',0,'$qty','$reqd','$id_sub')");
 
 
     mysqli_query($koneksi, "UPDATE item SET qty='$plus' WHERE item_cd='$itm'");

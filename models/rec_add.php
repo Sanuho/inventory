@@ -11,6 +11,7 @@ $numberberat = $_POST["qty"];
 if($qty > 0)
 {
 $sql=mysqli_query($koneksi, "INSERT INTO incoming_d (id_h,itm_cd,qty,rec_h) values('$id_h','$itm','$qty','$reqd')");
+$id_sub=mysqli_insert_id($koneksi);
 $stock=mysqli_query($koneksi,"SELECT * FROM item where item_cd='$itm'");
 $getqty=mysqli_fetch_array($stock);
 $plus=$getqty['qty']+$qty;
@@ -45,7 +46,7 @@ $hasilkode1="GG".$tglkode1.str_pad($kode1,7,"0",STR_PAD_LEFT);
 $reqty=$getqty['qty'];
 $waktu=gmdate("H:i:s", time()+60*60*7);
 $tanggal=date('Y-m-d');
-$grgi=mysqli_query($koneksi, "INSERT INTO grgi_history values('$hasilkode1','$itm','$plus','$tanggal','$waktu',$qty,0,'$reqd','$id_h')"); 
+$grgi=mysqli_query($koneksi, "INSERT INTO grgi_history values('$hasilkode1','$itm','$plus','$tanggal','$waktu',$qty,0,'$reqd','$id_sub')"); 
 
 
 

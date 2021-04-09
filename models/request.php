@@ -10,7 +10,7 @@ if(@$_POST["action"] <> "")
  
 $sql=mysqli_query($koneksi,"
 SELECT id_sub,qty,req_h,(SELECT b.item_nm FROM item b WHERE b.item_cd=a.itm_cd) AS item_nm,
-(SELECT c.nama_karyawan FROM karyawan c WHERE c.nik=a.remark) AS nama_karyawan
+(SELECT c.nama_karyawan FROM karyawan c WHERE c.nik=a.requester) AS nama_karyawan
  FROM request_d a WHERE req_h='$kode'
   ORDER BY a.id_sub");
 while($data=mysqli_fetch_array($sql)){

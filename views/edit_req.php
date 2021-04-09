@@ -7,7 +7,7 @@ if (isset($_GET['id'])) {
     $lastrow = mysqli_fetch_array($cek);
     $hasilkode = $lastrow[1];
     $idH = $lastrow[0];
-    $tanggal = $lastrow['date'];
+    $tanggal = date('d/m/Y',strtotime($lastrow['date_create']));
 }
 
 ?>
@@ -68,7 +68,7 @@ if (isset($_GET['id'])) {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Remark</td>
+                                    <td>Requester</td>
                                     <td>
                                         <div class="bootstrap-select fm-cmp-mg">
                                             <select class="selectpicker" name="cate" data-live-search="true" required>
@@ -80,6 +80,14 @@ if (isset($_GET['id'])) {
                                                     <option value="<?php echo $isicate['id']; ?>"><?php echo $isicate['id']; ?> - <?php echo $isicate['nama_karyawan']; ?></option>
                                                 <?php } ?>
                                             </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Remark</td>
+                                    <td>
+                                        <div class="bootstrap-select fm-cmp-mg">
+                                            <textarea id="" class="form-control" name="remark"></textarea>
                                         </div>
                                     </td>
                                 </tr>

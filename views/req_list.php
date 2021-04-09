@@ -36,7 +36,7 @@
                                             ?>
                                                 <tr>
                                                     <td><?php echo $data['req_h']; ?></td>
-                                                    <td><?php echo $data['date']; ?></td>
+                                                    <td><?php echo date('d-m-Y',strtotime($data['date_create'])); ?></td>
                                                     <td><?php echo $data['user']; ?></td>
                                                     <?php if ($data['flag'] == 0) {
                                                     ?>

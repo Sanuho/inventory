@@ -79,7 +79,7 @@
 
 <!-- Maruti -->
 
-<!--     <script src="assets/js/maruti/jquery.min.js"></script> 
+<!-- <!--     <script src="assets/js/maruti/jquery.min.js"></script> 
     <script src="assets/js/maruti/bootstrap.min.js"></script> 
     <script src="assets/js/maruti/jquery.uniform.js"></script> 
     <script src="assets/js/maruti/select2.min.js"></script> 

@@ -19,7 +19,7 @@ $bulan1=date('m');
 $tahun1=date('Y');
 $tahunAkhir1=substr($tahun1,2,2);
 $tglkode1=$tahunAkhir1.$bulan1;
-$carikode1=mysqli_query($koneksi,"SELECT max(grgi_no) from grgi_history") or die (mysqli_error());
+$carikode1=mysqli_query($koneksi,"SELECT max(grgi_no) from grgi_history");
 $datakode1=mysqli_fetch_array($carikode1);
 if($datakode1){
 $nilaitahun1=substr($datakode1[0],2,2);

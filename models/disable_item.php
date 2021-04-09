@@ -21,6 +21,7 @@ if ($query) {
 }
 }elseif($action == 2){
     $query=mysqli_query($koneksi,"UPDATE item set item.stat = 1 where item_cd='$id'");
+    echo  "UPDATE item set item.stat = 1 where item_cd='$id'";
     if ($query) {
         
       echo "<script type=\"text/javascript\">

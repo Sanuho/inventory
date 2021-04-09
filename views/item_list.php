@@ -6,7 +6,7 @@ $dept = @$_SESSION['wh'];
     <div class="container">
         <div class="row animated    ">
 
-            <div class="breadcomb-area">
+            <div class="breadcomb-area" style="margin-bottom: 10px;">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -20,14 +20,6 @@ $dept = @$_SESSION['wh'];
                                             <div class="breadcomb-ctn">
                                                 <h2>Item List</h2>
                                                 <p>Register <span class="bread-ntd">Item Here!!</span></p>
-                                                <form action="index.php?page=item" method="POST">
-                                                    <table>
-                                                        <th>
-                                                            <button type="submit" name="add" class="btn btn-success">
-                                                                New <i class="fa fa-plus-square"></i></button>
-                                                        </th>
-                                                    </table>
-                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -42,19 +34,26 @@ $dept = @$_SESSION['wh'];
             <div class="notika-status-area">
                 <div class="container">
                     <div class="row">
+                        <div class="alert alert-success alert-dismissible" role="alert" style="display: none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button>
+                            <p id="msg-success">Success</p>
+                        </div>
+                        <div class="alert alert-danger alert-dismissible alert-mg-b-0" role="alert" style="display: none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button>
+                            <p id="msg-error">Success</p>
+                        </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30">
+                            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-10 tb-res-mg-t-10">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <?php if ($dept == @$_SESSION['dept']) { ?>
-                                        <form action="index.php?page=item" method="POST">
-                                            <table>
-                                                <th>
-                                                    <button type="submit" name="add" class="btn btn-success">
-                                                        New <i class="fa fa-plus-square"></i></button>
-                                                </th>
-                                            </table>
-                                        </form>
-                                    <?php } ?>
+                                    <form action="index.php?page=item" method="POST">
+                                        <table>
+                                            <th>
+                                                <button type="submit" name="add" class="btn btn-success">
+                                                    New <i class="fa fa-plus-square"></i></button>
+                                            </th>
+                                        </table>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -67,9 +66,10 @@ $dept = @$_SESSION['wh'];
             <div class="data-table-area">
                 <div class="container">
                     <div class="row">
+
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="data-table-list">
-                                <div class="table-responsive">
+                                <div class="table-responsive" id="dataTable">
                                     <table id="data-table-basic" class="table table-striped">
                                         <thead>
                                             <tr>
@@ -82,49 +82,8 @@ $dept = @$_SESSION['wh'];
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <?php
-                                            $sql = mysqli_query($koneksi, "SELECT * FROM item, dept WHERE item.id_dept=dept.id_dept ");
-                                            while ($data = mysqli_fetch_array($sql)) {
-                                                if ($data['stat'] == 1) {
-                                                    $stat = "Actived";
-                                                    $warna = "btn-success";
-                                                    $btn="
-                                                    <button href data-toggle='tooltip' data-placement='left' title='Disable Item' class='btn btn-danger danger-icon-notika btn-reco-mg btn-button-mg'>
-                                                        <i class='notika-icon notika-close'></i>
-                                                    </button>";
-                                                } else {
-                                                    $stat = "Expired";
-                                                    $warna = "btn-danger";
-                                                    $btn="
-                                                    <button href data-toggle='tooltip' data-placement='left' title='Activate Item' class='btn btn-primary success-icon-notika btn-reco-mg btn-button-mg'>
-                                                        <i class='notika-icon notika-checked'></i>
-                                                    </button>";
-                                                }
-                                            ?>
-                                                <tr>
-                                                    <td><?php echo $data['item_cd']; ?></td>
-                                                    <td><?php echo $data['item_nm']; ?></td>
-                                                    <td><?php echo $data['id']; ?></td>
-                                                    <td><?php echo $data['qty']; ?></td>
-                                                    <td><?php echo $data['dept_nm']; ?></td>
-                                                    <td><span class="btn <?= $warna ?> btn-reco-mg btn-button-mg""><?= $stat ?></span></td>
-                                                    <td>
-                                                        <a href="index.php?page=item_edit&id=<?php echo $data['item_cd']; ?>" onclick="return confirm('edit data?')">
-                                                            <button data-toggle="tooltip" data-placement="left" title="Edit Data" class="btn btn-lime lime-icon-notika btn-reco-mg btn-button-mg"><i class="notika-icon notika-menus"></i></button></a>
-                                                        &nbsp;
-                                                        <a href="models/disable_item.php?action=<?= $data['stat'] ?>&id=<?= $data['item_cd']; ?>" onclick="return confirm('Are you sure?')">
-                                                            <?=$btn?>
-                                                        </a>
+                                        <tbody class="isi_tabel">
 
-                                                        &nbsp;
-                                                        <a href="report/stock_card.php?kode=<?php echo $data['item_cd']; ?>" target="blank" onclick="return confirm('Print data?')">
-                                                            <button href data-toggle="tooltip" data-placement="left" title="print Data" class="btn btn-success success-icon-notika btn-reco-mg btn-button-mg"><i class="notika-icon notika-sent"></i></button></a>
-                                                    </td>
-                                                </tr>
-                                            <?php
-                                            }
-                                            ?>
                                         </tbody>
                                         <tfoot>
                                             <tr>
@@ -147,3 +106,76 @@ $dept = @$_SESSION['wh'];
         </div>
     </div>
 </div>
+<script src="assets/js/maruti/jquery.min.js"></script>
+<script>
+    fetch();
+    $(document).ready(function() {
+		 $('#data-table-basic').DataTable({
+            "order": [[ 5, "asc" ]]
+         });
+	});
+
+    function fetch() {
+        var action = "fetch";
+        $.ajax({
+            url: "models/fetch_item.php",
+            method: "POST",
+            data: {
+                action: action
+            },
+            success: function(data) {
+                $('.isi_tabel').html(data);
+            }
+        });
+    }
+
+    function alertMsg(type, text) {
+        // alert(type);
+        if (type == "success") {
+            // document.getElementsByClassName('alert-success').style.display = "";
+            // $('.alert-success').show();​​​​​​
+            document.getElementById('msg-success').innerHTML = text;
+            $(".alert-success").fadeTo(10000, 500).slideUp(500, function() {
+                $(".alert-success").slideUp(500);
+            });
+        } else if (type == "error") {
+            // document.getElementsByClassName('alert-danger').style.display = "";
+            // $('.alert-danger').show();
+            document.getElementById('msg-error').innerHTML = text;
+            $(".alert-danger").fadeTo(10000, 500).slideUp(500, function() {
+                $(".alert-danger").slideUp(500);
+            });
+        }
+    }
+
+    function ConfirmDelete(id, no) {
+        if (id == 1) {
+            var x = confirm("Are you sure you want to disable ?");
+            var a = "disable";
+        } else {
+            var x = confirm("Are you sure you want to activate ?");
+            var a = "activate";
+        }
+
+        if (x) {
+            $.ajax({
+                url: "models/disable_item.php?action=" + id + "&id=" + no,
+                method: "POST",
+                data: {
+                    id: id,
+                    req: no
+                },
+                success: function(data) {
+                    alertMsg("success", "Success " + a);
+                    fetch();
+                },
+                error: function() {
+                    alertMsg("error", "Error delete item" + a);
+                }
+
+            });
+        } else {
+            return false;
+        }
+    }
+</script>
